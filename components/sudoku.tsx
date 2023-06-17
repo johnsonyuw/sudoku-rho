@@ -1,6 +1,8 @@
+import useSudoku from "@/contexts/sudokuContext";
 import { chunk } from "underscore";
 
-export default function SudokuBoard({ board }: { board: number[][] }) {
+export default function SudokuBoard() {
+  const board = useSudoku().state.sudoku;
   return (
     <div className="grid aspect-square content-center gap-4">
       {chunk(board, 3).map((rowChunk, x) => (
@@ -10,10 +12,14 @@ export default function SudokuBoard({ board }: { board: number[][] }) {
         >
           {rowChunk.map((row, i) => (
             <div className="grid grid-cols-3 gap-4" key={`${i}${x}`}>
-              {chunk(row, 3).map((colChunk, j) => (
-                <div className="flex justify-center gap-1" key={`${i}${j}`}>
-                  {colChunk.map((value, k) => (
-                    <SudokuCell key={`${i}${j}${k}`} value={value} />
+              {chunk(row, 3).map((colChunk, y) => (
+                <div className="flex justify-center gap-1" key={`${i}${y}`}>
+                  {colChunk.map((value, j) => (
+                    <SudokuCell
+                      key={`${i}${y}${j}`}
+                      value={value}
+                      idx={[x * 3 + i, y * 3 + j]}
+                    />
                   ))}
                 </div>
               ))}
@@ -25,7 +31,13 @@ export default function SudokuBoard({ board }: { board: number[][] }) {
   );
 }
 
-function SudokuCell({ value = 0 }: { value: number }) {
+function SudokuCell({
+  value = 0,
+  idx,
+}: {
+  value: number;
+  idx: [number, number];
+}) {
   return (
     <button className="btn-ghost btn bg-base-200 font-medium">
       <span className={value === 0 ? "invisible" : "visible"}>{value}</span>

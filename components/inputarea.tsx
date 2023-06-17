@@ -1,4 +1,4 @@
-import getSudokuEmptyBoard from "@/utils/getSudokuBoard";
+import { getEmptySudokuBoard } from "@/utils/getSudokuBoard";
 import { Dispatch, SetStateAction, useState, ChangeEvent } from "react";
 
 export default function InputArea({
@@ -35,7 +35,7 @@ export default function InputArea({
       .reduce((acc, cur, i) => {
         acc[Math.floor(i / 9)][i % 9] = cur;
         return acc;
-      }, getSudokuEmptyBoard());
+      }, getEmptySudokuBoard());
     setter(newData);
   };
 

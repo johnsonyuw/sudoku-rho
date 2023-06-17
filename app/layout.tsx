@@ -1,3 +1,4 @@
+import { SudokuProvider } from "@/contexts/sudokuContext";
 import "./globals.css";
 
 export const metadata = {
@@ -12,7 +13,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" data-theme="dracula">
-      <body>{children}</body>
+      <SudokuProvider>
+        <body>{children}</body>
+      </SudokuProvider>
     </html>
   );
 }
