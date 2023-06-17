@@ -1,12 +1,10 @@
 "use client";
 import Link from "next/link";
-import {
-  useState,
-} from "react";
+import { useState } from "react";
 
-import SudokuBoard from "@/component/sudoku";
+import SudokuBoard from "@/components/sudoku";
 import getSudokuEmptyBoard from "@/utils/getSudokuBoard";
-import InputArea from "@/component/inputarea";
+import InputArea from "@/components/inputarea";
 
 export default function Home() {
   const [sudokuInput, setSudokuInput] = useState<number[][]>(
