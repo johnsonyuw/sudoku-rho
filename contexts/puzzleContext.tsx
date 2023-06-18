@@ -1,23 +1,16 @@
 "use client";
 import getDefaultSudokuBoard from "@/utils/getSudokuBoard";
-import {
-  Dispatch,
-  SetStateAction,
-  createContext,
-  useContext,
-  useReducer,
-  useState,
-} from "react";
+import { Dispatch, createContext, useContext, useReducer } from "react";
 
-type SudokuStateType = {
+type PuzzleStateType = {
   sudoku: number[][];
 };
 
-const initialState: SudokuStateType = {
+const initialState: PuzzleStateType = {
   sudoku: getDefaultSudokuBoard(),
 };
 
-type SudokuActionType =
+type PuzzleActionType =
   | {
       type: "SET_SUDOKU";
       payload: number[][];
@@ -35,10 +28,10 @@ type SudokuActionType =
       };
     };
 
-function Sudoku(state: SudokuStateType, action: SudokuActionType) {
+function Sudoku(state: PuzzleStateType, action: PuzzleActionType) {
   if (process.env.NODE_ENV === "development")
-    console.log("[SUDOKU]", { state, action });
-  const newState: SudokuStateType = { ...state };
+    console.log("[PUZZLE]", { state, action });
+  const newState: PuzzleStateType = { ...state };
   switch (action.type) {
     case "SET_SUDOKU":
       newState.sudoku = action.payload;
@@ -60,25 +53,25 @@ function Sudoku(state: SudokuStateType, action: SudokuActionType) {
   }
 }
 
-const SudokuContext = createContext<{
-  state: SudokuStateType;
-  dispatch: Dispatch<SudokuActionType>;
+const PuzzleContext = createContext<{
+  state: PuzzleStateType;
+  dispatch: Dispatch<PuzzleActionType>;
 }>({
   state: initialState,
   dispatch: () => null,
 });
 
-export const SudokuProvider = ({ children }: { children: React.ReactNode }) => {
+export const PuzzleProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, dispatch] = useReducer(Sudoku, initialState);
   return (
-    <SudokuContext.Provider value={{ state, dispatch }}>
+    <PuzzleContext.Provider value={{ state, dispatch }}>
       {children}
-    </SudokuContext.Provider>
+    </PuzzleContext.Provider>
   );
 };
 
-export default function useSudoku() {
-  const context = useContext(SudokuContext);
+export default function usePuzzle() {
+  const context = useContext(PuzzleContext);
   if (context === undefined) {
     throw new Error("useSudoku must be used within a SudokuProvider");
   }

@@ -1,8 +1,17 @@
-import useSudoku from "@/contexts/sudokuContext";
+"use client";
+import usePuzzle from "@/contexts/puzzleContext";
 import { chunk } from "underscore";
 
-export default function SudokuBoard() {
-  const board = useSudoku().state.sudoku;
+export default function SudokuSection() {
+  return (
+    <section>
+      <SudokuBoard />
+    </section>
+  );
+}
+
+function SudokuBoard() {
+  const board = usePuzzle().state.sudoku;
   return (
     <div className="grid aspect-square content-center gap-4">
       {chunk(board, 3).map((rowChunk, x) => (
@@ -39,8 +48,13 @@ function SudokuCell({
   idx: [number, number];
 }) {
   return (
-    <button className="btn-ghost btn bg-base-200 font-medium">
-      <span className={value === 0 ? "invisible" : "visible"}>{value}</span>
-    </button>
+    <>
+      <button
+        className="btn-ghost btn bg-base-200 font-medium"
+        onFocus={() => console.log(idx)}
+      >
+        <span className={value === 0 ? "invisible" : "visible"}>{value}</span>
+      </button>
+    </>
   );
 }

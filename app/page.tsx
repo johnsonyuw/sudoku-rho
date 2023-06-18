@@ -1,8 +1,7 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
 
-import SudokuBoard from "@/components/sudoku";
+import SudokuSection from "@/components/sudoku";
 import getDefaultSudokuBoard from "@/utils/getSudokuBoard";
 
 export default function Home() {
@@ -10,7 +9,7 @@ export default function Home() {
     <>
       <Navbar />
       <main className="container mx-auto">
-        <SudokuBoard />
+        <SudokuSection />
       </main>
     </>
   );
