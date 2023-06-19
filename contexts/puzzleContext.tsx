@@ -22,8 +22,8 @@ type PuzzleActionType =
   | {
       type: "UPDATE_SUDOKU";
       payload: {
-        row: number;
-        col: number;
+        x: number;
+        y: number;
         value: number;
       };
     };
@@ -42,10 +42,8 @@ function Sudoku(state: PuzzleStateType, action: PuzzleActionType) {
     case "UPDATE_SUDOKU":
       // TODO: Optimize this
       newState.sudoku = [...state.sudoku];
-      newState.sudoku[action.payload.row] = [
-        ...state.sudoku[action.payload.row],
-      ];
-      newState.sudoku[action.payload.row][action.payload.col] =
+      newState.sudoku[action.payload.x] = [...state.sudoku[action.payload.x]];
+      newState.sudoku[action.payload.x][action.payload.y] =
         action.payload.value;
       return newState;
     default:
