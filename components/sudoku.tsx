@@ -7,7 +7,6 @@ import { TrashIcon } from "@heroicons/react/24/outline";
 export default function SudokuSection() {
   return (
     <BoardProvider>
-      {/* TODO: Make it responsive */}
       <section>
         <SudokuBoard />
         <SudokuInputs />
@@ -17,10 +16,7 @@ export default function SudokuSection() {
 }
 
 function SudokuBoard() {
-  const {
-    state: { sudoku: puzzleBoard },
-    dispatch,
-  } = usePuzzle();
+  const { dispatch } = usePuzzle();
   const { focusedCell } = useBoard().state;
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (focusedCell === null) return;
@@ -33,7 +29,7 @@ function SudokuBoard() {
   };
   return (
     <div
-      className="grid aspect-square content-center gap-4"
+      className="mx-auto grid w-full content-center gap-2 py-8 sm:max-w-md sm:gap-4"
       onKeyDown={handleKeyDown}
     >
       {range(3).map((x) => (
@@ -42,7 +38,7 @@ function SudokuBoard() {
           className="flex flex-col items-center justify-center gap-1"
         >
           {range(3).map((i) => (
-            <div className="grid grid-cols-3 gap-4" key={`${i}${x}`}>
+            <div className="grid grid-cols-3 gap-2 sm:gap-4" key={`${i}${x}`}>
               {range(3).map((y) => (
                 <div className="flex justify-center gap-1" key={`${i}${y}`}>
                   {range(3).map((j) => (
@@ -71,7 +67,7 @@ function SudokuCell({ idx }: { idx: [number, number] }) {
   return (
     <>
       <button
-        className={`btn  ${
+        className={`btn-sm btn sm:btn-md ${
           colliding
             ? "btn-error font-bold"
             : "btn-ghost bg-base-200 font-medium"
@@ -87,7 +83,7 @@ function SudokuCell({ idx }: { idx: [number, number] }) {
 
 function SudokuInputs() {
   return (
-    <div className="join w-full justify-center gap-1">
+    <div className="join w-full flex-wrap justify-center gap-1">
       {Array(10)
         .fill(0)
         .map((_, value) => (
@@ -107,7 +103,7 @@ function InputButton({ value }: { value: number }) {
   };
   return (
     <button
-      className="btn-ghost join-item btn bg-base-200"
+      className="btn-ghost btn-sm join-item btn bg-base-200 sm:btn-md"
       onClick={handleClick}
     >
       {value === 0 ? <TrashIcon className="h-4 w-4" /> : value}

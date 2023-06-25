@@ -2,7 +2,6 @@
 import Link from "next/link";
 
 import SudokuSection from "@/components/sudoku";
-import getDefaultSudokuBoard from "@/utils/getSudokuBoard";
 
 export default function Home() {
   return (
