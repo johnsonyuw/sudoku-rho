@@ -6,21 +6,21 @@ import {
 } from "./sudokuValidationFns";
 
 export const constraintsList = [
-  { name: "rowUnique", value: true },
-  { name: "colUnique", value: true },
-  { name: "boxUnique", value: true },
-  { name: "diagonalUnique", value: false },
+  { name: "unique rows", value: true },
+  { name: "unique columns", value: true },
+  { name: "unique boxes", value: true },
+  { name: "unique diagonals", value: false },
 ];
 
 export function getConstraintValidationFn(name: string) {
   switch (name) {
-    case "rowUnique":
+    case "unique rows":
       return RowsValidation;
-    case "colUnique":
+    case "unique columns":
       return ColsValidation;
-    case "boxUnique":
+    case "unique boxes":
       return BoxesValidation;
-    case "diagonalUnique":
+    case "unique diagonals":
       return DiagonalsValidation;
     default:
       throw new Error("Invalid constraint name");
