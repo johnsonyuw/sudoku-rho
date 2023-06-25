@@ -10,6 +10,7 @@ export default function SudokuSection() {
       <section>
         <SudokuBoard />
         <SudokuInputs />
+        <ConstraintsInput />
       </section>
     </BoardProvider>
   );
@@ -67,11 +68,10 @@ function SudokuCell({ idx }: { idx: [number, number] }) {
   return (
     <>
       <button
-        className={`btn-sm btn sm:btn-md ${
-          colliding
-            ? "btn-error font-bold"
-            : "btn-ghost bg-base-200 font-medium"
-        }`}
+        className={`btn-sm btn sm:btn-md ${colliding
+          ? "btn-error font-bold"
+          : "btn-ghost bg-base-200 font-medium"
+          }`}
         onClick={handleFocus}
         onFocus={handleFocus}
       >
@@ -109,4 +109,34 @@ function InputButton({ value }: { value: number }) {
       {value === 0 ? <TrashIcon className="h-4 w-4" /> : value}
     </button>
   );
+}
+
+// TODO: Make UI better
+function ConstraintsInput() {
+  const { constraints } = usePuzzle().state;
+  return (
+    <div className="join w-full flex-wrap justify-center gap-1 py-4">
+      {
+        constraints.map((_constraint, idx) => (
+          <ConstraintButton key={idx} idx={idx} />
+        ))
+      }
+    </div>
+  )
+}
+
+function ConstraintButton({ idx }: { idx: number }) {
+  const { dispatch } = usePuzzle();
+  const constraintName = usePuzzle().state.constraints[idx].name;
+  const handleClick = () => {
+    dispatch({ type: "TOGGLE_CONSTRAINT", payload: idx });
+  }
+  return (
+    <button
+      className={`btn-sm join-item btn sm:btn-md ${usePuzzle().state.constraints[idx].value ? "btn-primary" : "btn-ghost bg-base-200"}`}
+      onClick={handleClick}
+    >
+      {constraintName}
+    </button>
+  )
 }

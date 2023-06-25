@@ -21,21 +21,24 @@ const initialState: PuzzleStateType = {
 
 type PuzzleActionType =
   | {
-      type: "SET_SUDOKU";
-      payload: number[][];
-    }
+    type: "SET_SUDOKU";
+    payload: number[][];
+  }
   | {
-      type: "RESET_SUDOKU";
-      payload: null;
-    }
+    type: "RESET_SUDOKU";
+    payload: null;
+  }
   | {
-      type: "UPDATE_SUDOKU";
-      payload: {
-        x: number;
-        y: number;
-        value: number;
-      };
+    type: "UPDATE_SUDOKU";
+    payload: {
+      x: number;
+      y: number;
+      value: number;
     };
+  } | {
+    type: "TOGGLE_CONSTRAINT";
+    payload: number;
+  };
 
 function Sudoku(state: PuzzleStateType, action: PuzzleActionType) {
   if (process.env.NODE_ENV === "development")
@@ -54,6 +57,12 @@ function Sudoku(state: PuzzleStateType, action: PuzzleActionType) {
       newState.sudoku[action.payload.x] = [...state.sudoku[action.payload.x]];
       newState.sudoku[action.payload.x][action.payload.y] =
         action.payload.value;
+      newState.collision = validate(newState.sudoku, newState.constraints);
+      return newState;
+    case "TOGGLE_CONSTRAINT":
+      newState.constraints = [...state.constraints];
+      newState.constraints[action.payload] = { ...newState.constraints[action.payload] };
+      newState.constraints[action.payload].value = !newState.constraints[action.payload].value;
       newState.collision = validate(newState.sudoku, newState.constraints);
       return newState;
     default:
