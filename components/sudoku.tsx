@@ -1,7 +1,7 @@
 "use client";
 import useBoard, { BoardProvider } from "@/contexts/boardContext";
 import usePuzzle from "@/contexts/puzzleContext";
-import { chunk, range } from "underscore";
+import { range } from "underscore";
 import { TrashIcon } from "@heroicons/react/24/outline";
 
 export default function SudokuSection() {
@@ -61,9 +61,9 @@ function SudokuBoard() {
   );
 }
 
-// TODO: Remove value prop and use idx to get value from puzzle
 function SudokuCell({ idx }: { idx: [number, number] }) {
   const value = usePuzzle().state.sudoku[idx[0]][idx[1]];
+  const colliding = usePuzzle().state.collision[idx[0]][idx[1]];
   const { dispatch } = useBoard();
   const handleFocus = () => {
     dispatch({ type: "SET_FOCUSED_CELL", payload: idx });
@@ -71,7 +71,11 @@ function SudokuCell({ idx }: { idx: [number, number] }) {
   return (
     <>
       <button
-        className="btn-ghost btn bg-base-200 font-medium"
+        className={`btn  ${
+          colliding
+            ? "btn-error font-bold"
+            : "btn-ghost bg-base-200 font-medium"
+        }`}
         onClick={handleFocus}
         onFocus={handleFocus}
       >

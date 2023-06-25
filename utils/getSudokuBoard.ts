@@ -10,7 +10,11 @@ const getDefaultSudokuBoard = () => {
 };
 
 const getEmptySudokuBoard = () => times(9, () => times(9, () => 0));
+const getEmptyCollisions = () => times(9, () => times(9, () => false));
+
+type SudokuBoard = number[][];
 
 // default export getDefaultSudokuBoard and export getSudokuEmptyBoard
 export default getDefaultSudokuBoard;
-export { getEmptySudokuBoard };
+export { getEmptySudokuBoard, getEmptyCollisions };
+export type { SudokuBoard };
