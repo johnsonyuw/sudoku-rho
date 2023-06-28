@@ -1,8 +1,6 @@
-"use client";
-
 import { PuzzleProvider } from "@/contexts/puzzleContext";
+import ServiceWorker from "@/components/serviceworker";
 import "./globals.css";
-import { useEffect } from "react";
 
 export const metadata = {
   title: "Sudoku",
@@ -14,11 +12,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  useEffect(() => {
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("/service-worker.js")
-    }
-  })
   return (
     <html lang="en" data-theme="dracula">
       <head>
@@ -65,6 +58,7 @@ export default function RootLayout({
       <PuzzleProvider>
         <body>{children}
         </body>
+        <ServiceWorker />
       </PuzzleProvider>
     </html>
   );
