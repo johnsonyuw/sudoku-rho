@@ -5,3 +5,4 @@
 - Hints
 - Pencil marking
 - New input mode for entering puzzle which will remain read-only for whole game
+- Generating board for challange
