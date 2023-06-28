@@ -1,5 +1,5 @@
 import { PuzzleProvider } from "@/contexts/puzzleContext";
-import ServiceWorker from "@/components/serviceworker";
+// import ServiceWorker from "@/components/serviceworker";
 import "./globals.css";
 
 export const metadata = {
@@ -58,7 +58,7 @@ export default function RootLayout({
       <PuzzleProvider>
         <body>{children}
         </body>
-        <ServiceWorker />
+        {/* <ServiceWorker /> */}
       </PuzzleProvider>
     </html>
   );
