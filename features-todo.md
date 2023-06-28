@@ -1,9 +1,7 @@
 # Features to be added in future to this application
 
-- Toggle Constraints
-  - Uniqueness Constraint
-    - Diagonals
-    - Box
-    - Knight move
-- Denote collision
+- AI solving complete board
+- AI solving single cell if possible
 - Hints
+- Pencil marking
+- New input mode for entering puzzle which will remain read-only for whole game
