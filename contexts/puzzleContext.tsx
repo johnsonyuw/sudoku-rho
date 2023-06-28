@@ -11,12 +11,15 @@ type PuzzleStateType = {
   sudoku: SudokuBoard;
   collision: boolean[][];
   constraints: typeof constraintsList;
+  readOnlyCells: boolean[][];
 };
 
+const initialSudoku = getDefaultSudokuBoard();
 const initialState: PuzzleStateType = {
-  sudoku: getDefaultSudokuBoard(),
+  sudoku: initialSudoku,
   collision: getEmptyCollisions(),
   constraints: constraintsList,
+  readOnlyCells: initialSudoku.map((row) => row.map((cell) => cell !== 0)),
 };
 
 type PuzzleActionType =

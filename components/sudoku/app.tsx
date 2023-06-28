@@ -11,7 +11,6 @@ export default function SudokuSection() {
       <section>
         <SudokuBoard />
         <SudokuInputs />
-        <ConstraintsInput />
         <SudokuActions />
       </section>
     </BoardProvider>

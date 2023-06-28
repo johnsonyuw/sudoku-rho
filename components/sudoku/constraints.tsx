@@ -1,31 +1,37 @@
 import usePuzzle from "@/contexts/puzzleContext";
 
-// TODO: Make UI better
-export default function ConstraintsInput() {
-	const { constraints } = usePuzzle().state;
-	return (
-		<div className="join w-full flex-wrap justify-center gap-1 py-4">
-			{
-				constraints.map((_constraint, idx) => (
-					<ConstraintButton key={idx} idx={idx} />
-				))
-			}
-		</div>
-	)
+export default function ConstraintDrowdown() {
+  return (
+    <details className="dropdown-end dropdown">
+      <summary>Constraints</summary>
+      {/* <ul className="p-2 bg-base-100"> */}
+      <ul className="dropdown-content menu rounded-box z-[1] w-60 bg-base-300 p-2 shadow">
+        {usePuzzle().state.constraints.map((_, idx) => (
+          <ConstraintButton key={idx} idx={idx} />
+        ))}
+      </ul>
+    </details>
+  );
 }
 
 function ConstraintButton({ idx }: { idx: number }) {
-	const { dispatch } = usePuzzle();
-	const constraintName = usePuzzle().state.constraints[idx].name;
-	const handleClick = () => {
-		dispatch({ type: "TOGGLE_CONSTRAINT", payload: idx });
-	}
-	return (
-		<button
-			className={`btn-sm join-item btn sm:btn-md ${usePuzzle().state.constraints[idx].value ? "btn-accent" : "btn-ghost bg-base-200"}`}
-			onClick={handleClick}
-		>
-			{constraintName}
-		</button>
-	)
+  const { dispatch } = usePuzzle();
+  const { name, value } = usePuzzle().state.constraints[idx];
+  return (
+    <li>
+      <div className="block">
+        <label className="flex cursor-pointer justify-between">
+          <span className="label-text capitalize">{name}</span>
+          <input
+            type="checkbox"
+            className="toggle-secondary toggle"
+            onClick={() =>
+              dispatch({ type: "TOGGLE_CONSTRAINT", payload: idx })
+            }
+            checked={value}
+          />
+        </label>
+      </div>
+    </li>
+  );
 }

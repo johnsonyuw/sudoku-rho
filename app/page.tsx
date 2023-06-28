@@ -2,6 +2,7 @@
 import Link from "next/link";
 
 import SudokuSection from "@/components/sudoku/app";
+import ConstraintDrowdown from "@/components/sudoku/constraints";
 
 export default function Home() {
   return (
@@ -16,8 +17,15 @@ export default function Home() {
 
 const Navbar: React.FC = () => (
   <div className="navbar bg-base-300">
-    <Link className="btn-ghost btn text-xl normal-case" href="">
-      Sudoku
-    </Link>
+    <div className="flex-1">
+      <Link className="btn-ghost btn text-xl normal-case" href="">
+        Sudoku
+      </Link>
+    </div>
+    <div className="flex-none">
+      <ul className="menu menu-horizontal px-1">
+        <li><ConstraintDrowdown /></li>
+      </ul>
+    </div>
   </div>
 );
