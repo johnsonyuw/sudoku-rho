@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 
-import SudokuSection from "@/components/sudoku";
+import SudokuSection from "@/components/sudoku/app";
 
 export default function Home() {
   return (
