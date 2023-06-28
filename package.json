@@ -27,7 +27,7 @@
     "underscore": "^1.13.6"
   },
   "devDependencies": {
-    "daisyui": "^3.1.0",
+    "daisyui": "^3.1.6",
     "prettier": "^2.8.8",
     "prettier-plugin-tailwindcss": "^0.3.0"
   }
