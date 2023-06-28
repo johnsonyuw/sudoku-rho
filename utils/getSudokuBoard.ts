@@ -9,12 +9,26 @@ const getDefaultSudokuBoard = () => {
 	);
 };
 
-const getEmptySudokuBoard = () => times(9, () => times(9, () => 0));
-const getEmptyCollisions = () => times(9, () => times(9, () => false));
+/**
+ * Returns a 9x9 array of type filled with value
+ * @param value Value to be filled in the board
+ * @returns 9x9 array of type filled with value
+ * 
+ * eg: getBoardFilled<number>(0) should return a 9x9 array of 0s.
+ * 
+ * eg: getBoardFilled<boolean>(false) should return a 9x9 array of falses.
+ */
+const getBoardFilled = <T>(value: T): T[][] => {
+	return times(9, () => times(9, () => value));
+};
+
+const getEmptySudokuBoard = () => getBoardFilled(0);
+const getEmptyCollisions = () => getBoardFilled(false);
+
 
 type SudokuBoard = number[][];
 
 // default export getDefaultSudokuBoard and export getSudokuEmptyBoard
 export default getDefaultSudokuBoard;
-export { getEmptySudokuBoard, getEmptyCollisions };
+export { getEmptySudokuBoard, getEmptyCollisions, getBoardFilled };
 export type { SudokuBoard };
