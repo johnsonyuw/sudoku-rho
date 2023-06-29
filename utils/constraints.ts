@@ -5,11 +5,17 @@ import {
   DiagonalsValidation,
 } from "./sudokuValidationFns";
 
-export const constraintsList = [
-  { name: "unique rows", value: true },
-  { name: "unique columns", value: true },
-  { name: "unique boxes", value: true },
-  { name: "unique diagonals", value: false },
+export enum constraintsEnum {
+  uRows = "unique rows",
+  uCols = "unique columns",
+  uBoxes = "unique boxes",
+  uDiags = "unique diagonals"
+}
+export const constraintsList: { name: constraintsEnum, value: boolean }[] = [
+  { name: constraintsEnum.uRows, value: true },
+  { name: constraintsEnum.uCols, value: true },
+  { name: constraintsEnum.uBoxes, value: true },
+  { name: constraintsEnum.uDiags, value: false },
 ];
 
 export function getConstraintValidationFn(name: string) {

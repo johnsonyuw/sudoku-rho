@@ -1,3 +1,5 @@
+export type validatorFn = ((grid: number[][], index: [number, number], value: number) => boolean)
+
 export function validValueByRowForIndex(grid: number[][], index: [number, number], value: number): boolean {
 	return grid[index[0]].includes(value);
 }
@@ -26,3 +28,11 @@ export function validValueForDiagonalByIndex(grid: number[][], index: [number, n
 	}
 	return true;
 }
+
+const guessValidator = {
+	"unique rows": validValueByRowForIndex,
+	"unique columns": validValueByColumnForIndex,
+	"unique boxes": validValueByBoxForIndex,
+	"unique diagonals": validValueForDiagonalByIndex,
+}
+export default guessValidator;
