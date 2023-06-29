@@ -9,7 +9,10 @@ import usePuzzle from "@/contexts/puzzleContext";
 export default function Home() {
   const { state: { puzzleCreatingMode } } = usePuzzle();
   return (
-    <div data-theme={puzzleCreatingMode ? 'bumblebee' : 'dracula'}>
+    <div
+      data-theme={puzzleCreatingMode ? 'bumblebee' : 'dracula'}
+      className="min-h-screen"
+    >
       <Navbar />
       <main className="container mx-auto">
         <SudokuSection />

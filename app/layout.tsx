@@ -13,7 +13,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" data-theme="dracula">
+    <html lang="en">
       <head>
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -56,9 +56,9 @@ export default function RootLayout({
         <meta name="theme-color" content="#ffffff" />
       </head>
       <PuzzleProvider>
-        <body>{children}
+        <body>
+          {children}
         </body>
-        {/* <ServiceWorker /> */}
       </PuzzleProvider>
     </html>
   );
