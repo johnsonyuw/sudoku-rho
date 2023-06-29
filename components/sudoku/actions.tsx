@@ -33,6 +33,10 @@ function SolveBtn() {
 }
 
 function ResetBtn() {
-  return <button className="btn btn-block btn-sm content-center btn-error">Reset</button>
+  const { dispatch } = usePuzzle();
+  return <button
+    className="btn btn-block btn-sm content-center btn-error"
+    onClick={() => dispatch({ type: "RESET_PUZZLE" })}
+  >Reset</button>
 }
 

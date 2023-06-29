@@ -45,6 +45,8 @@ type PuzzleActionType =
     payload: number;
   } | {
     type: "TOGGLE_PUZZLE_CREATION_MODE";
+  } | {
+    type: "RESET_PUZZLE";
   };
 
 function Sudoku(state: PuzzleStateType, action: PuzzleActionType) {
@@ -78,6 +80,17 @@ function Sudoku(state: PuzzleStateType, action: PuzzleActionType) {
       return newState;
     case "TOGGLE_PUZZLE_CREATION_MODE":
       newState.puzzleCreatingMode = !newState.puzzleCreatingMode;
+      return newState;
+    case "RESET_PUZZLE":
+      // Removing all the non-readonly cells from the board
+      newState.sudoku = state.sudoku.map(
+        (row, i) => row.map(
+          (col, j) => (
+            state.readOnlyCells[i][j] ? col : 0
+          )
+        )
+      );
+      newState.collision = validate(newState.sudoku, newState.constraints);
       return newState;
     default:
       return state;
