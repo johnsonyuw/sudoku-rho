@@ -1,7 +1,11 @@
 export type validatorFn = ((grid: number[][], index: [number, number], value: number) => boolean)
 
-export function validValueByRowForIndex(grid: number[][], index: [number, number], value: number): boolean {
-	return grid[index[0]].includes(value);
+export function validValueByRowForIndex(
+	grid: number[][],
+	index: [number, number],
+	value: number
+): boolean {
+	return !grid[index[0]].includes(value);
 }
 
 export function validValueByColumnForIndex(grid: number[][], index: [number, number], value: number): boolean {
