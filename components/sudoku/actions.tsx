@@ -6,7 +6,7 @@ export default function SudokuActions() {
       <summary>Actions</summary>
       <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52 gap-1">
         <li><PuzzleCreationModeCheckbox /></li>
-        {/* <li><SolveBtn /></li> */}
+        <li><SolveBtn /></li>
         <li><ResetBtn /></li>
       </ul>
     </details>
@@ -29,7 +29,11 @@ function PuzzleCreationModeCheckbox() {
 }
 
 function SolveBtn() {
-  return <button className="btn btn-block btn-sm content-center btn-primary">Solve</button>
+  const { dispatch } = usePuzzle();
+  return <button
+    className="btn btn-block btn-sm content-center btn-primary"
+    onClick={() => dispatch({ type: "SOLVE_PUZZLE" })}
+  >Solve</button>
 }
 
 function ResetBtn() {

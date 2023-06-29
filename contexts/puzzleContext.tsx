@@ -6,6 +6,7 @@ import getDefaultSudokuBoard, {
 import { Dispatch, createContext, useContext, useReducer } from "react";
 import { constraintsList } from "@/utils/constraints";
 import { getConstraintValidationFn } from "@/utils/constraints";
+import SolveBoard from "@/utils/sudokuSolvers";
 
 type PuzzleStateType = {
   sudoku: SudokuBoard;
@@ -47,6 +48,8 @@ type PuzzleActionType =
     type: "TOGGLE_PUZZLE_CREATION_MODE";
   } | {
     type: "RESET_PUZZLE";
+  } | {
+    type: "SOLVE_PUZZLE";
   };
 
 function Sudoku(state: PuzzleStateType, action: PuzzleActionType) {
@@ -91,6 +94,9 @@ function Sudoku(state: PuzzleStateType, action: PuzzleActionType) {
         )
       );
       newState.collision = validate(newState.sudoku, newState.constraints);
+      return newState;
+    case "SOLVE_PUZZLE":
+      newState.sudoku = SolveBoard(state.sudoku, state.constraints) || state.sudoku;
       return newState;
     default:
       return state;
