@@ -6,7 +6,7 @@ export default function SudokuActions() {
       <summary>Actions</summary>
       <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52 gap-1">
         <li><PuzzleCreationModeCheckbox /></li>
-        <li><SolveBtn /></li>
+        {/* <li><SolveBtn /></li> */}
         <li><ResetBtn /></li>
       </ul>
     </details>
