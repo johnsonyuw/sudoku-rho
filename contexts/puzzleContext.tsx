@@ -21,7 +21,7 @@ const initialState: PuzzleStateType = {
   collision: getEmptyCollisions(),
   constraints: constraintsList,
   puzzleCreatingMode: false,
-  readOnlyCells: initialSudoku.map((row) => row.map((cell) => cell !== 0)),
+  readOnlyCells: getReadOnlyCells(initialSudoku),
 };
 
 type PuzzleActionType =
@@ -60,11 +60,15 @@ function Sudoku(state: PuzzleStateType, action: PuzzleActionType) {
       return newState;
     case "UPDATE_SUDOKU":
       // TODO: Optimize this
+      if (!state.puzzleCreatingMode && state.readOnlyCells[action.payload.x][action.payload.y]) return state;
       newState.sudoku = [...state.sudoku];
       newState.sudoku[action.payload.x] = [...state.sudoku[action.payload.x]];
       newState.sudoku[action.payload.x][action.payload.y] =
         action.payload.value;
       newState.collision = validate(newState.sudoku, newState.constraints);
+      if (state.puzzleCreatingMode) {
+        newState.readOnlyCells = getReadOnlyCells(newState.sudoku);
+      }
       return newState;
     case "TOGGLE_CONSTRAINT":
       newState.constraints = [...state.constraints];
@@ -120,4 +124,8 @@ function validate(grid: number[][], constraints: typeof constraintsList) {
     newCollision[x][y] = true;
   }
   return newCollision;
+}
+
+function getReadOnlyCells(board: number[][]) {
+  return board.map((row) => row.map((cell) => cell !== 0));
 }
