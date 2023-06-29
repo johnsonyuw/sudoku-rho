@@ -58,7 +58,7 @@ function SudokuCell({ idx }: { idx: [number, number] }) {
 					? "btn-error font-bold"
 					: "btn-ghost bg-base-200 font-medium"
 					}`}
-				onClick={handleFocus}
+				// onClick={handleFocus}
 				onFocus={handleFocus}
 			>
 				<span className={value === 0 ? "invisible" : "visible"}>{value}</span>
