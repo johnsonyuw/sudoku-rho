@@ -11,6 +11,7 @@ type PuzzleStateType = {
   sudoku: SudokuBoard;
   collision: boolean[][];
   constraints: typeof constraintsList;
+  puzzleCreatingMode: boolean;
   readOnlyCells: boolean[][];
 };
 
@@ -19,6 +20,7 @@ const initialState: PuzzleStateType = {
   sudoku: initialSudoku,
   collision: getEmptyCollisions(),
   constraints: constraintsList,
+  puzzleCreatingMode: false,
   readOnlyCells: initialSudoku.map((row) => row.map((cell) => cell !== 0)),
 };
 
@@ -41,6 +43,8 @@ type PuzzleActionType =
   } | {
     type: "TOGGLE_CONSTRAINT";
     payload: number;
+  } | {
+    type: "TOGGLE_PUZZLE_CREATION_MODE";
   };
 
 function Sudoku(state: PuzzleStateType, action: PuzzleActionType) {
@@ -67,6 +71,9 @@ function Sudoku(state: PuzzleStateType, action: PuzzleActionType) {
       newState.constraints[action.payload] = { ...newState.constraints[action.payload] };
       newState.constraints[action.payload].value = !newState.constraints[action.payload].value;
       newState.collision = validate(newState.sudoku, newState.constraints);
+      return newState;
+    case "TOGGLE_PUZZLE_CREATION_MODE":
+      newState.puzzleCreatingMode = !newState.puzzleCreatingMode;
       return newState;
     default:
       return state;

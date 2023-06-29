@@ -4,15 +4,17 @@ import Link from "next/link";
 import SudokuSection from "@/components/sudoku/app";
 import ConstraintDrowdown from "@/components/sudoku/constraints";
 import SudokuActions from "@/components/sudoku/actions";
+import usePuzzle from "@/contexts/puzzleContext";
 
 export default function Home() {
+  const { state: { puzzleCreatingMode } } = usePuzzle();
   return (
-    <>
+    <div data-theme={puzzleCreatingMode ? 'bumblebee' : 'dracula'}>
       <Navbar />
       <main className="container mx-auto">
         <SudokuSection />
       </main>
-    </>
+    </div>
   );
 }
 
@@ -28,9 +30,9 @@ const Navbar: React.FC = () => (
         <li>
           <ConstraintDrowdown />
         </li>
-        {/* <li>
+        <li>
           <SudokuActions />
-        </li> */}
+        </li>
       </ul>
     </div>
   </div>
