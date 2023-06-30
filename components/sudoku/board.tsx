@@ -3,16 +3,28 @@ import usePuzzle from "@/contexts/puzzleContext";
 import { range } from "underscore";
 
 export default function SudokuBoard() {
-	const { dispatch } = usePuzzle();
+	const { dispatch: puzzleDispatch } = usePuzzle();
+	const { dispatch: boardDispatch } = useBoard();
 	const { focusedCell } = useBoard().state;
 	const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
 		if (focusedCell === null) return;
 		const [x, y] = focusedCell;
+		// On backspace, set value to 0, i.e. remove value from sudoku board
 		if (e.key === "Backspace")
-			dispatch({ type: "UPDATE_SUDOKU", payload: { x, y, value: 0 } });
+			puzzleDispatch({ type: "UPDATE_SUDOKU", payload: { x, y, value: 0 } });
+		// check for arrow keys and move focused cell accordingly
+		if (e.key === "ArrowUp" || e.key === "w" || e.key === "W")
+			boardDispatch({ type: "MOVE_FOCUSED_CELL", payload: "UP" });
+		if (e.key === "ArrowDown" || e.key === "s" || e.key === "S")
+			boardDispatch({ type: "MOVE_FOCUSED_CELL", payload: "DOWN" });
+		if (e.key === "ArrowLeft" || e.key === "a" || e.key === "A")
+			boardDispatch({ type: "MOVE_FOCUSED_CELL", payload: "LEFT" });
+		if (e.key === "ArrowRight" || e.key === "d" || e.key === "D")
+			boardDispatch({ type: "MOVE_FOCUSED_CELL", payload: "RIGHT" });
+		// Ignore non-numeric keys
 		const value = parseInt(e.key);
 		if (isNaN(value)) return;
-		dispatch({ type: "UPDATE_SUDOKU", payload: { x, y, value } });
+		puzzleDispatch({ type: "UPDATE_SUDOKU", payload: { x, y, value } });
 	};
 	return (
 		<div
@@ -47,7 +59,7 @@ export default function SudokuBoard() {
 function SudokuCell({ idx }: { idx: [number, number] }) {
 	const value = usePuzzle().state.sudoku[idx[0]][idx[1]];
 	const colliding = usePuzzle().state.collision[idx[0]][idx[1]];
-	const { dispatch } = useBoard();
+	const { dispatch, state: { focusedCell } } = useBoard();
 	const handleFocus = () => {
 		dispatch({ type: "SET_FOCUSED_CELL", payload: idx });
 	};
@@ -58,11 +70,16 @@ function SudokuCell({ idx }: { idx: [number, number] }) {
 					? "btn-error font-bold"
 					: "btn-ghost bg-base-200 font-medium"
 					}`}
-				// onClick={handleFocus}
 				onFocus={handleFocus}
+				// Focus on cell when focusedCell changes
+				ref={el => (
+					idx[0] === focusedCell?.[0]
+					&& idx[1] === focusedCell?.[1]
+					&& el?.focus()
+				)}
 			>
 				<span className={value === 0 ? "invisible" : "visible"}>{value}</span>
-			</button>
+			</button >
 		</>
 	);
 }

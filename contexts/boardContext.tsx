@@ -1,6 +1,7 @@
 "use client";
 
 import { Dispatch, createContext, useContext, useReducer } from "react";
+import { max, min } from "underscore";
 
 type BoardStateType = {
   focusedCell: [number, number] | null;
@@ -12,12 +13,15 @@ const initialState: BoardStateType = {
 
 type BoardActionType =
   | {
-      type: "SET_FOCUSED_CELL";
-      payload: [number, number];
-    }
+    type: "SET_FOCUSED_CELL";
+    payload: [number, number];
+  }
   | {
-      type: "UNFOCUS_CELL";
-    };
+    type: "UNFOCUS_CELL";
+  } | {
+    type: "MOVE_FOCUSED_CELL";
+    payload: "UP" | "DOWN" | "LEFT" | "RIGHT";
+  };
 
 function Board(state: BoardStateType, action: BoardActionType) {
   if (process.env.NODE_ENV === "development")
@@ -35,6 +39,25 @@ function Board(state: BoardStateType, action: BoardActionType) {
       return newState;
     case "UNFOCUS_CELL":
       newState.focusedCell = null;
+      return newState;
+    case "MOVE_FOCUSED_CELL":
+      if (!state.focusedCell) return state;
+      const [row, col] = state.focusedCell;
+      switch (action.payload) {
+        case "UP":
+          newState.focusedCell = [max([row - 1, 0]), col];
+          break;
+        case "DOWN":
+          newState.focusedCell = [min([row + 1, 8]), col];
+          break;
+        case "LEFT":
+          newState.focusedCell = [row, max([col - 1], 0)];
+          break;
+        case "RIGHT":
+          newState.focusedCell = [row, min([col + 1, 8])];
+          break;
+      }
+      return newState;
     default:
       return state;
   }
