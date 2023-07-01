@@ -1,5 +1,7 @@
 import useBoard from "@/contexts/boardContext";
 import usePuzzle from "@/contexts/puzzleContext";
+import getPossibleValueForIndex from "@/utils/sudokuPossibilitiesOfIndex";
+import { useState } from "react";
 import { range } from "underscore";
 
 export default function SudokuBoard() {
@@ -57,14 +59,30 @@ export default function SudokuBoard() {
 }
 
 function SudokuCell({ idx }: { idx: [number, number] }) {
-	const value = usePuzzle().state.sudoku[idx[0]][idx[1]];
-	const colliding = usePuzzle().state.collision[idx[0]][idx[1]];
+	const { state: puzzleState } = usePuzzle();
+	const value = puzzleState.sudoku[idx[0]][idx[1]];
+	const colliding = puzzleState.collision[idx[0]][idx[1]];
 	const { dispatch, state: { focusedCell } } = useBoard();
 	const handleFocus = () => {
 		dispatch({ type: "SET_FOCUSED_CELL", payload: idx });
 	};
+	const [possibleValues, setPossibleValues] = useState<number[]>([]);
 	return (
-		<>
+		<div
+			className="tooltip tooltip-accent"
+			onMouseEnter={() => setPossibleValues(
+				getPossibleValueForIndex(
+					puzzleState.sudoku,
+					idx,
+					puzzleState.constraints.filter(e => e.value)
+				)
+			)}
+			data-tip={
+				possibleValues.length > 0
+					? possibleValues.join(", ")
+					: "No possible values"
+			}
+		>
 			<button
 				className={`btn-sm btn sm:btn-md ${colliding
 					? "btn-error font-bold"
@@ -79,7 +97,7 @@ function SudokuCell({ idx }: { idx: [number, number] }) {
 				)}
 			>
 				<span className={value === 0 ? "invisible" : "visible"}>{value}</span>
-			</button >
-		</>
+			</button>
+		</div>
 	);
 }
