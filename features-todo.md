@@ -1,5 +1,7 @@
 # Features to be added in future to this application
 
+- Redesign sudoku board
+- Use workbox for PWA
 - AI solving single cell if possible
 - Hints
 - Pencil marking
