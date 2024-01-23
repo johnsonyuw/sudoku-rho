@@ -8,6 +8,7 @@ import { constraintsList } from "@/utils/constraints";
 import { getConstraintValidationFn } from "@/utils/constraints";
 import SolveBoard from "@/utils/sudokuSolvers";
 
+
 type PuzzleStateType = {
   sudoku: SudokuBoard;
   collision: boolean[][];
@@ -17,6 +18,7 @@ type PuzzleStateType = {
 };
 
 const initialSudoku = getDefaultSudokuBoard();
+console.log("initialSudoku", initialSudoku);
 const initialState: PuzzleStateType = {
   sudoku: initialSudoku,
   collision: getEmptyCollisions(),
@@ -61,6 +63,7 @@ function Sudoku(state: PuzzleStateType, action: PuzzleActionType) {
       newState.sudoku = action.payload;
       return newState;
     case "RESET_SUDOKU":
+      console.log("RESET_SUDOKU");
       newState.sudoku = getDefaultSudokuBoard();
       return newState;
     case "UPDATE_SUDOKU":

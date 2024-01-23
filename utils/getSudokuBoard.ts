@@ -1,9 +1,16 @@
 import { chunk, times } from "underscore";
+import generate from '@/utils/sudoku';
+// import React, { useState } from 'react';
 
 const getDefaultSudokuBoard = () => {
+	// const [difficulty, setDifficulty] = useState("easy");
+	const newBoard = generate("medium");
+	console.log("new game:"+newBoard);
+	//把 newBoard 字符串中的 '.' 替换成 '0'
+	const newBoard2 = newBoard.replace(/\./g, '0');
 	return chunk(
 		// "900000073720080000000400000002003000000000000001000690009700060360009100000045002"
-		"500913720300080509090250080680470230009500460704000005020000000400891600850720003"
+		newBoard2
 			.split("")
 			.map((e) => parseInt(e)),
 		9
